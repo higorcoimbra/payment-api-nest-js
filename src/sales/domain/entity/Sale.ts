@@ -7,15 +7,10 @@ export class Sale {
     readonly id: string,
     readonly salesmanId: string,
     readonly date: Date,
-    readonly orderId: string,
   ) {}
 
-  setItems(items: Item[]) {
-    this.items = [...items];
-  }
-
-  static create(salesmanId: string, date: Date, orderId: string): Sale {
+  static create(salesmanId: string, date: Date): Sale {
     const id = crypto.randomUUID();
-    return new Sale(id, salesmanId, date, orderId);
+    return new Sale(id, salesmanId, date);
   }
 }
