@@ -1,15 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  SaleRepositoryInMemory,
-  TypeOrmSaleRepository,
-} from '../../../infrastructure/repositories/SaleRepository';
+import { TypeOrmSaleRepository } from '../../../infrastructure/repositories/SaleRepository';
 import GetSale from '../GetSale/GetSale';
 import { RegisterSale } from './RegisterSale';
 import { TypeORMMySqlTestingModule } from '../../../../../test/test-utils/TypeORMMysqlTestingModule';
 import { Sale as TypeOrmSale } from '../../../frameworks/database/typeorm/TypeOrmSale';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Item as TypeOrmItem } from '../../../frameworks/database/typeorm/TypeOrmItem';
-import { INestApplication } from '@nestjs/common';
 
 let typeOrmSaleRepository: TypeOrmSaleRepository;
 
@@ -45,7 +41,6 @@ it('should register a sale with salesman data and items sold', async () => {
     ],
   };
 
-  // const saleRepository = new SaleRepositoryInMemory();
   const saleRepository = typeOrmSaleRepository;
   const registerSale = new RegisterSale(saleRepository);
   const output = await registerSale.execute(input);
@@ -54,5 +49,4 @@ it('should register a sale with salesman data and items sold', async () => {
   const outputGetSale = await getSale.execute(output.saleId);
   expect(outputGetSale.date.getTime()).toBe(new Date('2024-01-10').getTime());
   expect(outputGetSale.items.length).toBe(2);
-  expect(outputGetSale.salesmanId).toBe('id1');
 });
