@@ -1,8 +1,9 @@
-import { Column, ManyToOne } from 'typeorm';
-import { Sale } from '../../../domain/entity/Sale';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Sale } from './TypeOrmSale';
 
+@Entity()
 export class Item {
-  @Column()
+  @PrimaryColumn()
   id: string;
 
   @Column()

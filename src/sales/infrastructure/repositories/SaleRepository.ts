@@ -22,7 +22,14 @@ export class TypeOrmSaleRepository implements SaleRepository {
   }
 
   async findSaleById(id: string): Promise<Sale> {
-    const typeOrmSale = await this.saleRepository.findOneBy({ id });
+    const [typeOrmSale] = await this.saleRepository.find({
+      where: {
+        id,
+      },
+      relations: {
+        items: true,
+      },
+    });
     if (!typeOrmSale) throw new Error('Sale not found');
     return this.toSale(typeOrmSale);
   }

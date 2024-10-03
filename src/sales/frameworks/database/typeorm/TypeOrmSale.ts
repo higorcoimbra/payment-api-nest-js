@@ -1,13 +1,16 @@
-import { Column, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Item } from './TypeOrmItem';
 
+@Entity()
 export class Sale {
-  @Column()
+  @PrimaryColumn()
   id: string;
 
   @Column('datetime')
   date: Date;
 
-  @OneToMany(() => Item, (item) => item.sale)
+  @OneToMany(() => Item, (item) => item.sale, {
+    cascade: true,
+  })
   items: Item[];
 }
